@@ -143,5 +143,80 @@ public class MyArrayList <T>
         return string;
     }
 
+
+    // Heavy Methods
+    // 7. SortList method sorting from smallest to largest returns T/F
+    public boolean sortList()
+    {
+        T hold; // element that we'll be continously comparing
+
+        for (int i =0; i < size-1; i++)
+        {
+            for (int j =0; j < size - 1; j++)
+            {
+                
+                // Checks if value 1 > value 2, if true swaps them
+                if (((Comparable)data[j]).compareTo(data[j+1]) >0)
+                
+                // compareTo, unlike .equals() compares object rank
+                // Comparable is necessary for compareTo() 
+                // Introducee Comparable through implementation or type-casted
+                // type-casting however will throw ClassCastException at runtime if T element (data[i]) not Comparable
+                {
+                    hold = data[j]; // save the value we want to shift
+                    data[j+1] = data[j]; // move the smaller value to previous index
+                    data[j] = hold; // place saved value in "new" index
+                }
+            }
+
+        }
+        return true;
+    }
+
+    // 8. Filter array between two values, cutting array between those points.
+    public void filter(T low, T high)
+    {
+        // If no element in array
+        if(size()==0)
+        {
+            System.out.println("No elements in array.");
+            return;
+        }
+
+        // If 'low' is actually higher than 'high'
+        if (((Comparable)low).compareTo(high) > 0)
+        {
+            System.out.println("Low: " +low+ " is bigger than High:" +high);
+            return;
+        }
+
+        // create new array called filtered
+        Object [] temp = new Object [MAXELEMENTS];
+        T [] filtered = (T[]) temp;
+
+        // Create new var j for the filtered array
+        int j =0;
+
+        // Use comparable to populate new array
+        
+        for (int i =0; i < size; i++)
+        {
+            if ((((Comparable)data[i]).compareTo(low) >0) && (((Comparable)data[i]).compareTo(low) < 0))
+            {
+                filtered[j] = data[i];\
+                j++;
+
+            } 
+        }
+
+        // Now transfer everything from filtered to data
+        data = filtered;
+        size = j; // size of data is now the amount of elements filtered has, which is j
+
+
+    }
+
+
+
     
 }
