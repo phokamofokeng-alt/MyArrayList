@@ -48,6 +48,19 @@ public class MyArrayList <T>
         
     }
 
+    // Polymorphism: Method overloading
+    // If we just want to add at end of array, no index needed
+
+    public void add(T value)
+    {
+        data[size] = value;
+        size++;
+        
+
+    }
+
+
+
     // 2. Contains method checks if array has specified element and return T/F
     public boolean contains (Object element)
     // we use Obj. Item doesn't have to be generic type
@@ -112,7 +125,7 @@ public class MyArrayList <T>
 
     }
 
-    // 5. size method returns size of array
+    // 5. size method returns size of arrayList
 
     public int size()
     {
@@ -203,7 +216,7 @@ public class MyArrayList <T>
         {
             if ((((Comparable)data[i]).compareTo(low) >0) && (((Comparable)data[i]).compareTo(low) < 0))
             {
-                filtered[j] = data[i];\
+                filtered[j] = data[i];
                 j++;
 
             } 
@@ -216,7 +229,86 @@ public class MyArrayList <T>
 
     }
 
+    // Merge method
+    // Combine arrayLists return array
+    public MyArrayList <T> merge (MyArrayList<T> paramList)
+    {
+        MyArrayList<T> holdArray = new MyArrayList<>();
+        
+        // If current arrayList has no elements
+        if(this.size() == 0)
+        {
+            return paramList;
 
+        }
+
+        // If parameterList is empty
+        if(paramList.size() == 0)
+        {
+            return this;
+
+        }
+
+        // If there is no space in arrayList
+        if(this.size() + paramList.size() > MAXELEMENTS)
+        {
+            throw new IndexOutOfBoundsException("Too many elemnts in arrayList");
+
+        }
+
+        MyArrayList<T> returnArrayList = new MyArrayList<>();
+
+        int i =0; // counter for calling array (ours)
+        int j = 0; // counter for paramter array
+        int k =0; // counter for return array
+
+        //Traverse both lists until one is empty
+
+        while(i< this.size() &&  j< paramList.size())
+        {
+            // If data values smaller
+            if(((Comparable) data[i]).compareTo(paramList.data[j]) < 0)
+            {
+                returnArrayList.data[k] = data[i];
+                k++;
+                i++;
+
+
+            }
+            // If param values smaller
+            else
+            {
+                returnArrayList.data[k] = paramList.data[j];
+                k++;
+                j++;
+            }
+        }
+
+        //copy remainder of calling ArrayList
+        if (i < this.size())
+        {
+            for (int x = i; x< size(); x++)
+            {
+                returnArrayList.data[k] = data[x];
+                k++;
+            }
+        }
+
+        if (j < paramList.size())
+        {
+            for (int y = j; y< paramList.size(); y++)
+            {
+                returnArrayList.data[k] = paramList.data[y];
+                k++;
+
+            }
+        }
+        returnArrayList.size = k;
+
+        return returnArrayList;
+
+
+    }
 
     
 }
